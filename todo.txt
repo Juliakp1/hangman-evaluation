@@ -1,0 +1,8 @@
+
+B -> avalia corretamente jogador
+A -> principais casos de erro explicitados (jogador erra com x)
+
+-------------------------------
+
+Todo:
+Guessing alg
