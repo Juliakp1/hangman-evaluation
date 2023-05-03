@@ -91,6 +91,7 @@ def absolute_probability(chosenWord):
     guessList = []
     for i in range(letters):
         guessList.append('.')
+    guessWord = ''.join(guessList)
 
     curLetter = 0 
     while game.running:
@@ -107,8 +108,8 @@ def absolute_probability(chosenWord):
         guessWord = ''.join(guessList)
         gotWord = game.check_word(guessWord)
         if gotWord:
+            print(f'I got it! It was: {guessWord}')
             break
-    print(guessWord)
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
@@ -170,15 +171,16 @@ def letter_by_round(word):
             guessWord = ''.join(guessList)
             gotWord = game.check_word(guessWord)
             if gotWord:
+                print(f'I got it! It was: {guessWord}')
                 break
 
             # gets the next guess
             nextGuess = get_new_guess(guessList, currentAlphabet)
-    print(guessWord)
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
 print('This file lets you test the different algs')
+print('They all have 5 wrong guesses')
 print('Choose one: ')
 print('1 - absolute_probability')
 print('2 - letter_by_round')
