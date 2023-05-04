@@ -189,9 +189,9 @@ def run_game(chosen, word):
                 nextGuess = absolute_probability(counter)
                 counter += 1
             elif (chosen == 2):
-                nextGuess = letter_by_round(guessList, currentAlphabet)
-            elif (chosen == 3):
                 nextGuess = letter_by_empty_space(guessList, currentAlphabet)
+            elif (chosen == 3):
+                nextGuess = letter_by_round(guessList, currentAlphabet)
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
@@ -199,8 +199,8 @@ print('This file lets you test the different algs')
 print('They all have 5 wrong guesses')
 print('Choose one: ')
 print('1 - absolute_probability')
-print('2 - letter_by_round')
-print('3 - letter_by_empty_space')
+print('2 - letter_by_empty_space')
+print('3 - letter_by_round')
 
 chosen = int(input(''))
 word = input('Chose word: ')
