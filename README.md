@@ -17,7 +17,7 @@ File a rodar no IDE:
 
 ## Algoritmo: Probabilidade absoluta
 
-Esse algoritmo é extremamente simples. ELe percorre a lista de palavras uma unica vez, e faz uma lista das letras das mais prováveis de aparecer para menos provavel, e entao chuta elas em ordem. Ele não verifica o tabuleiro, e sempre chuta na mesma ordem.
+Esse algoritmo é extremamente simples. Ele percorre a lista de palavras uma unica vez, e faz uma lista das letras das mais prováveis de aparecer para menos provável, e então chuta elas em ordem. Ele não verifica o tabuleiro, e sempre chuta na mesma ordem.
 
 Ordem de chutes:
 - `a, e, s, r, i, o, m, n, t, c, d, u, l, p, v, g, b, f, h, z, j, q, x, w, k, y`
