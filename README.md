@@ -15,6 +15,15 @@ File a rodar no IDE:
 
 ------------------------------------------------------
 
+## Algoritmo: Probabilidade absoluta
+
+Esse algoritmo é extremamente simples. ELe percorre a lista de palavras uma unica vez, e faz uma lista das letras das mais prováveis de aparecer para menos provavel, e entao chuta elas em ordem. Ele não verifica o tabuleiro, e sempre chuta na mesma ordem.
+
+Ordem de chutes:
+- a, e, s, r, i, o, m, n, t, c, d, u, l, p, v, g, b, f, h, z, j, q, x, w, k, y
+
+------------------------------------------------------
+
 ## Algoritmo: Probabilidade de letra por rodada
 
 Para fazer esse algoritmo, eu criei uma função que recebe a palavra sendo advinhada (com os desconhecidos sendo pontos) e o alfabeto disponivel (ou seja, sem as letras que ele chutou e errou). Exemplo:
