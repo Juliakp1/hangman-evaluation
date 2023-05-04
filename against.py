@@ -129,14 +129,14 @@ def letter_by_empty_space(guessList, currentAlphabet):
             if (word[i] in currentAlphabet) and (word[i] not in guessList):
                 probabilities[i][word[i].lower()] += 1
 
-    # gets the probability of empty spots only
-    allProbs = {}
-    for i in range(len(guessList)):
-        if guessList[i] == '.':
-            key = max(probabilities[i], key=probabilities[i].get)
-            allProbs[key] = probabilities[i][key]
+    # just so hit doesnt always guess the first empty
+    listIndexes = [i for i in range(len(guessList))]
+    random.shuffle(listIndexes)
 
-    return max(allProbs, key=allProbs.get)
+    # gets the max of an empty spot
+    for i in listIndexes:
+        if guessList[i] == '.':
+            return max(probabilities[i], key=probabilities[i].get)
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
@@ -151,8 +151,14 @@ def run_game(chosen, word):
     guessList = ['.' for i in range(letters)]
     guessWord = ''.join(guessList)
 
+    # sets up a first guess (considers word lenght)
     nextGuess = 'a'
     currentAlphabet = 'abcdefghijklmnopqrstuvwxyz'
+    if (chosen == 2):
+        nextGuess = letter_by_round(guessList, currentAlphabet)
+    elif (chosen == 3):
+        nextGuess = letter_by_empty_space(guessList, currentAlphabet)
+
     counter = 0
     while game.running:
 
