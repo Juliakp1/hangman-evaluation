@@ -68,7 +68,7 @@ class Hangman:
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-def absolute_probability(chosenWord):
+def absolute_probability(counter):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
     probabilities = {letter:0 for letter in alphabet}
 
@@ -81,39 +81,11 @@ def absolute_probability(chosenWord):
     probabilities = dict(sorted(probabilities.items(), key=lambda item: item[1], reverse=True))
     keysProbs = list(probabilities.keys())
 
-    # starts game
-    game = Hangman()
-    game.new_game()  
-    game.word = chosenWord
-    letters = len(game.word)
-
-    # makes a list to save the guesses
-    guessList = []
-    for i in range(letters):
-        guessList.append('.')
-    guessWord = ''.join(guessList)
-
-    curLetter = 0 
-    while game.running:
-
-        # guesses a letter and saves it 
-        print(guessWord, '- guess: ', keysProbs[curLetter]) 
-        letterSpots = game.guess_letter(keysProbs[curLetter])
-        if type(letterSpots) != bool:
-            for numbs in letterSpots:
-                guessList[numbs] = keysProbs[curLetter]
-            curLetter+=1
-
-        # checks if the word is already guessed
-        guessWord = ''.join(guessList)
-        gotWord = game.check_word(guessWord)
-        if gotWord:
-            print(f'I got it! It was: {guessWord}')
-            break
+    return keysProbs[counter]
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-def get_new_guess(guessList, currentAlphabet):
+def letter_by_round(guessList, currentAlphabet):
 
     probabilities = {letter:0 for letter in currentAlphabet}
 
@@ -135,9 +107,40 @@ def get_new_guess(guessList, currentAlphabet):
     nextGuess = max(probabilities, key=probabilities.get)
     return nextGuess
 
-# ---------------------------------------------- #
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-def letter_by_round(word):
+def letter_by_empty_space(guessList, currentAlphabet):
+
+    # better efficiency (only not guessed letters)
+    cutAlphabet = [i for i in currentAlphabet if i not in guessList]  
+    probabilities = [{letter:0 for letter in cutAlphabet} for i in range(len(guessList))]
+
+    # gets all the words that fit this situation
+    filterRegex = ''.join(guessList)
+    possibleWords = list(filter(lambda v: match(filterRegex, v), content))
+
+    # gets words that fit into the current alphabet, and lenght
+    filterRegex = '^['+currentAlphabet+']{'+str(len(guessList))+'}$'
+    avaliableWords = list(filter(lambda v: match(filterRegex, v), possibleWords))
+
+    # makes a list of probabilities for every spot
+    for word in avaliableWords:
+        for i in range(len(word)):
+            if (word[i] in currentAlphabet) and (word[i] not in guessList):
+                probabilities[i][word[i].lower()] += 1
+
+    # gets the probability of empty spots only
+    allProbs = {}
+    for i in range(len(guessList)):
+        if guessList[i] == '.':
+            key = max(probabilities[i], key=probabilities[i].get)
+            allProbs[key] = probabilities[i][key]
+
+    return max(allProbs, key=allProbs.get)
+
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
+
+def run_game(chosen, word):
 
     game = Hangman()
     game.new_game()  
@@ -145,13 +148,12 @@ def letter_by_round(word):
     letters = len(game.word)
 
     # makes a list to save the guesses
-    guessList = []
-    for i in range(letters):
-        guessList.append('.')
+    guessList = ['.' for i in range(letters)]
     guessWord = ''.join(guessList)
 
     nextGuess = 'a'
     currentAlphabet = 'abcdefghijklmnopqrstuvwxyz'
+    counter = 0
     while game.running:
 
         # guesses a letter and saves it 
@@ -171,11 +173,19 @@ def letter_by_round(word):
             guessWord = ''.join(guessList)
             gotWord = game.check_word(guessWord)
             if gotWord:
+                print('')
                 print(f'I got it! It was: {guessWord}')
+                print(f'I had {game.lifes} lives left!')
                 break
 
             # gets the next guess
-            nextGuess = get_new_guess(guessList, currentAlphabet)
+            if (chosen == 1):
+                nextGuess = absolute_probability(counter)
+                counter += 1
+            elif (chosen == 2):
+                nextGuess = letter_by_round(guessList, currentAlphabet)
+            elif (chosen == 3):
+                nextGuess = letter_by_empty_space(guessList, currentAlphabet)
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
@@ -184,11 +194,9 @@ print('They all have 5 wrong guesses')
 print('Choose one: ')
 print('1 - absolute_probability')
 print('2 - letter_by_round')
+print('3 - letter_by_empty_space')
 
 chosen = int(input(''))
 word = input('Chose word: ')
 
-if (chosen == 1):
-    absolute_probability(word)
-if (chosen == 2):
-    letter_by_round(word)
+run_game(chosen, word)
