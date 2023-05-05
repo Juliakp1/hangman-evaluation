@@ -74,5 +74,6 @@ Se testarmos 'falo' com o algoritmo em si, temos esse resultado:
 
 Algumas palavras possíveis (o que o algoritmo encontrou nesse formato):
 
-- `caso, raso, rato, gato, tato, nado, bafo, dano, saio, sapo, pato, pano, vazo`, etc.
+- `caso, raso, rato, gato, tato, nado, bafo, dano, saio, sapo, pato, pano, vazo` etc.
 
+Como so temos 5 chutes, acaba sendo impossível descobrir a palavra somente utilizando chutes de uma letra. O algoritmo conseguiria resolver mais palavras com 6 vidas, mais problemas como o acima ainda ocorreria, o que significa que tem certas palavras que são simplesmente impossíveis de advinhar com consistência, considerando que são selecionadas aleatoriamente. 
