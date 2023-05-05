@@ -130,9 +130,11 @@ def letter_by_round(guessList, currentAlphabet):
 
     # adds 1 for every time that letter appears
     for word in avaliableWords:
+        letterAdded = []
         for letter in word:
-            if (letter in currentAlphabet) and (letter not in guessList):
+            if (letter in currentAlphabet) and (letter not in guessList) and (letter not in letterAdded):
                 probabilities[letter.lower()] += 1
+                letterAdded.append(letter)
 
     # gets the key of the hight value in dict
     nextGuess = max(probabilities, key=probabilities.get)
