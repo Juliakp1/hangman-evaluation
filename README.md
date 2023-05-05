@@ -51,7 +51,7 @@ Ele utiliza o mesmo processo de _regex_ que o algoritmo anterior para filtrar a 
 
 - ocorrencias: `{'h': 2, 'o': 3}`
 
-Com isso, ele seleciona a letra `o` e depois `h`, acertando a palavra `cachorro`.
+Com isso, ele seleciona a letra `o` e depois de rodar novamente `h`, acertando a palavra `cachorro`.
 
 ------------------------------------------------------
 
