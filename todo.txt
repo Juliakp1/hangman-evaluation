@@ -5,7 +5,4 @@ A -> principais casos de erro explicitados (jogador erra com x)
 -------------------------------
 
 Todo:
-
-next guessing alg
-    - entropy code?
-    - confusion
+don :D

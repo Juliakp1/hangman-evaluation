@@ -85,30 +85,6 @@ def absolute_probability(counter):
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-def letter_by_round(guessList, currentAlphabet):
-
-    probabilities = {letter:0 for letter in currentAlphabet}
-
-    # gets all the words that fit this situation
-    filterRegex = ''.join(guessList)
-    possibleWords = list(filter(lambda v: match(filterRegex, v), content))
-
-    # gets words that fit into the current alphabet, and lenght
-    filterRegex = '^['+currentAlphabet+']{'+str(len(guessList))+'}$'
-    avaliableWords = list(filter(lambda v: match(filterRegex, v), possibleWords))
-
-    # adds 1 for every time that letter appears
-    for word in avaliableWords:
-        for letter in word:
-            if (letter in currentAlphabet) and (letter not in guessList):
-                probabilities[letter.lower()] += 1
-
-    # gets the key of the hight value in dict
-    nextGuess = max(probabilities, key=probabilities.get)
-    return nextGuess
-
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
-
 def letter_by_empty_space(guessList, currentAlphabet):
 
     # better efficiency (only not guessed letters)
@@ -140,6 +116,30 @@ def letter_by_empty_space(guessList, currentAlphabet):
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
+def letter_by_round(guessList, currentAlphabet):
+
+    probabilities = {letter:0 for letter in currentAlphabet}
+
+    # gets all the words that fit this situation
+    filterRegex = ''.join(guessList)
+    possibleWords = list(filter(lambda v: match(filterRegex, v), content))
+
+    # gets words that fit into the current alphabet, and lenght
+    filterRegex = '^['+currentAlphabet+']{'+str(len(guessList))+'}$'
+    avaliableWords = list(filter(lambda v: match(filterRegex, v), possibleWords))
+
+    # adds 1 for every time that letter appears
+    for word in avaliableWords:
+        for letter in word:
+            if (letter in currentAlphabet) and (letter not in guessList):
+                probabilities[letter.lower()] += 1
+
+    # gets the key of the hight value in dict
+    nextGuess = max(probabilities, key=probabilities.get)
+    return nextGuess
+
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
+
 def run_game(chosen, word):
 
     game = Hangman()
@@ -155,9 +155,9 @@ def run_game(chosen, word):
     nextGuess = 'a'
     currentAlphabet = 'abcdefghijklmnopqrstuvwxyz'
     if (chosen == 2):
-        nextGuess = letter_by_round(guessList, currentAlphabet)
-    elif (chosen == 3):
         nextGuess = letter_by_empty_space(guessList, currentAlphabet)
+    elif (chosen == 3):
+        nextGuess = letter_by_round(guessList, currentAlphabet)
 
     counter = 0
     while game.running:
@@ -182,6 +182,7 @@ def run_game(chosen, word):
                 print('')
                 print(f'I got it! It was: {guessWord}')
                 print(f'I had {game.lifes} lives left!')
+                print('')
                 break
 
             # gets the next guess
@@ -195,6 +196,7 @@ def run_game(chosen, word):
 
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
+print('')
 print('This file lets you test the different algs')
 print('They all have 5 wrong guesses')
 print('Choose one: ')
