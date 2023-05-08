@@ -49,7 +49,7 @@ Para fazer esse algoritmo, eu criei uma função que recebe a palavra sendo advi
 
 Ele utiliza o mesmo processo de _regex_ que o algoritmo anterior para filtrar a lista de palavras. Ele entao calcula a quantidade de ocorrencias de cada letra nessa lista filtrada, desconsiderando as que ja chutou e somente contando a letra uma vez por palavra, e seleciona a que aparece mais vezes. No exemplo acima, a lista de probabilidades fica assim:
 
-- ocorrencias: `{'h': 2, 'o': 3}`
+- ocorrencias: `{'h': 2, 'o': 2}`
 
 Com isso, ele seleciona a letra `o` e depois de rodar novamente `h`, acertando a palavra `cachorro`.
 
